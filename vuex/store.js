@@ -51,10 +51,6 @@ const mutations = {
   SET_ACTIVE_NOTE (state, key, note) {
     state.activeNote = note
     state.activeKey = key
-  },
-
-  SAVE_CONTENT (state, text) {
-
   }
 }
 

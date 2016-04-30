@@ -17,7 +17,3 @@ export const updateActiveNote = ({ dispatch }, key, note) => {
 export const toggleFavorite = ({ dispatch }) => {
   dispatch('TOGGLE_FAVORITE')
 }
-
-export const saveContent = ({ dispatch }, text) => {
-  dispatch('SAVE_CONTENT')
-}

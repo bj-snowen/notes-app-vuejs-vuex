@@ -26,7 +26,6 @@
     <!-- filter -->
     <div class="input">
       <input v-model="query" placeholder="Filter your notes...">
-      <i class="search icon"></i>
     </div>
     
     <!-- render notes in a list -->
