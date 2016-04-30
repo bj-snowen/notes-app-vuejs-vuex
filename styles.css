@@ -31,6 +31,19 @@ body {
   font-weight: 400;
 }
 
+input {
+  margin-bottom: 20px;
+  width: 100%;
+  border-radius: 4px;
+  line-height: 25px;
+}
+
+#notes-list .input{
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
 #list-header {
   padding: 5px 25px 25px 25px;
 }
@@ -52,8 +65,12 @@ body {
 }
 
 #notes-list .container .list-group-item {
-  border: 0;
+  /*border: 0;*/
   border-radius: 0;
+}
+
+.list-group-item {
+  border-bottom: 1px solid #d4d4d4;
 }
 
 .list-group-item-heading {

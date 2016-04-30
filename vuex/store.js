@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Firebase from 'firebase'
 
 Vue.use(Vuex)
 
+let notesRef = new Firebase('https://crackling-inferno-296.firebaseio.com/notes')
+
+notesRef.on('value', snapshot => {
+  state.notes = snapshot.val()
+})
+
 const state = {
-  notes: [],
-  activeNote: {}
+  notes: {},
+  activeNote: {},
+  activeKey: ''
 }
 
 const mutations = {
@@ -14,25 +22,39 @@ const mutations = {
       text: 'New note',
       favorite: false
     }
-    state.notes.push(newNote)
+    var addRef = notesRef.push()
+    state.activeKey = addRef.key()
+    addRef.set(newNote)
     state.activeNote = newNote
   },
 
   EDIT_NOTE (state, text) {
-    state.activeNote.text = text
+    notesRef.child(state.activeKey).update({
+      'text': text
+    })
   },
 
   DELETE_NOTE (state) {
-    state.notes.$remove(state.activeNote)
-    state.activeNote = state.notes[0]
+    // notesRef.(state.activeNote)
+    notesRef.child(state.activeKey).set(null)
+    // state.activeNote = state.notes[0]
   },
 
   TOGGLE_FAVORITE (state) {
     state.activeNote.favorite = !state.activeNote.favorite
+    notesRef.child(state.activeKey).update({
+      'favorite': state.activeNote.favorite
+    })
+    // state.activeNote.favorite = !state.activeNote.favorite
   },
 
-  SET_ACTIVE_NOTE (state, note) {
+  SET_ACTIVE_NOTE (state, key, note) {
     state.activeNote = note
+    state.activeKey = key
+  },
+
+  SAVE_CONTENT (state, text) {
+
   }
 }
 

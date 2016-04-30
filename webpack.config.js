@@ -1,10 +1,21 @@
 module.exports = {
   entry: './main.js',
   output: {
-    path: __dirname,
+    path: './static',
+    publicPath: '/static/',
     filename: 'build.js'
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.vue$/,
+        loader: 'eslint'
+      },
+      {
+        test: /\.js$/,
+        loader: 'eslint'
+      }
+    ],
     loaders: [
       {
         test: /\.js$/,
@@ -20,5 +31,8 @@ module.exports = {
   babel: {
     presets: ['es2015'],
     plugins: ['transform-runtime']
+  },
+  eslint: {
+    formatter: require('eslint-friendly-formatter')
   }
 }

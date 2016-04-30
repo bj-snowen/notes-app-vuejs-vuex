@@ -22,20 +22,26 @@
         </div>
       </div>
     </div>
+
+    <!-- filter -->
+    <div class="input">
+      <input v-model="query" placeholder="Filter your notes...">
+      <i class="search icon"></i>
+    </div>
+    
     <!-- render notes in a list -->
     <div class="container">
       <div class="list-group">
-        <a v-for="note in filteredNotes"
+        <a v-for="note in filteredNotes | byTitle query"
           class="list-group-item" href="#"
-          :class="{active: activeNote === note}"
-          @click="updateActiveNote(note)">
+          :class="{active: activeKey === $key}"
+          @click="updateActiveNote($key, note)">
           <h4 class="list-group-item-heading">
-            {{note.text.trim().substring(0, 30)}}
+            {{note.text.substring(0, 30)}}
           </h4>
         </a>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -45,13 +51,15 @@ import { updateActiveNote } from '../vuex/actions'
 export default {
   data () {
     return {
-      show: 'all'
+      show: 'all',
+      query: ''
     }
   },
   vuex: {
     getters: {
       notes: state => state.notes,
-      activeNote: state => state.activeNote
+      activeNote: state => state.activeNote,
+      activeKey: state => state.activeKey
     },
     actions: {
       updateActiveNote
@@ -59,11 +67,28 @@ export default {
   },
   computed: {
     filteredNotes () {
-      if (this.show === 'all'){
+      var favoriteNotes = {}
+      if (this.show === 'all') {
         return this.notes
       } else if (this.show === 'favorites') {
-        return this.notes.filter(note => note.favorite)
+        for (var note in this.notes) {
+          if (this.notes[note]['favorite']) {
+            favoriteNotes[note] = this.notes[note]
+          }
+        }
+        return favoriteNotes
       }
+    }
+  },
+  filters: {
+    byTitle (notesToFilter, filterValue) {
+      var filteredNotes = {}
+      for (let note in notesToFilter) {
+        if (notesToFilter[note]['text'].indexOf(filterValue) > -1) {
+          filteredNotes[note] = notesToFilter[note]
+        }
+      }
+      return filteredNotes
     }
   }
 }

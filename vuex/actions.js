@@ -10,10 +10,14 @@ export const deleteNote = ({ dispatch }) => {
   dispatch('DELETE_NOTE')
 }
 
-export const updateActiveNote = ({ dispatch }, note) => {
-  dispatch('SET_ACTIVE_NOTE', note)
+export const updateActiveNote = ({ dispatch }, key, note) => {
+  dispatch('SET_ACTIVE_NOTE', key, note)
 }
 
 export const toggleFavorite = ({ dispatch }) => {
   dispatch('TOGGLE_FAVORITE')
+}
+
+export const saveContent = ({ dispatch }, text) => {
+  dispatch('SAVE_CONTENT')
 }
