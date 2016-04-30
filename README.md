@@ -7,6 +7,13 @@
 * 为了保证代码整洁，加上了 eslint
 * more...
 
+在运行之前，记得把 store.js 里面的数据引用改成你自己账号的链接。
+
+```js
+// 改一下数据应用
+let notesRef = new Firebase('https://crackling-inferno-296.firebaseio.com/notes')
+```
+
 ### Install the dependencies
 
 ```bash
