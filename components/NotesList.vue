@@ -27,11 +27,11 @@
     <div class="input">
       <input v-model="query" placeholder="Filter your notes...">
     </div>
-    
+
     <!-- render notes in a list -->
     <div class="container">
       <div class="list-group">
-        <a v-for="note in filteredNotes | byTitle query"
+        <a v-for="note in filteredNotes"
           class="list-group-item" href="#"
           :class="{active: activeKey === $key}"
           @click="updateActiveNote($key, note)">
@@ -83,7 +83,7 @@ export default {
     byTitle (notesToFilter, filterValue) {
       var filteredNotes = {}
       for (let note in notesToFilter) {
-        if (notesToFilter[note]['text'].indexOf(filterValue) > -1) {
+        if (notesToFilter[note].text.indexOf(filterValue) > -1) {
           filteredNotes[note] = notesToFilter[note]
         }
       }
